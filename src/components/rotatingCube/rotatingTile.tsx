@@ -46,7 +46,7 @@ export default function RotatingTile({
 
   return (
     <div
-      className="container"
+      className="rotating-cube container"
       onClick={() => animateTile()}
       role="button"
       aria-label="Rotate cube"

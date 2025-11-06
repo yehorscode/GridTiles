@@ -1,24 +1,24 @@
-import RotatingTile from "@/components/rotatingTile";
-import VerticalRotatingTile, { Front, Top, Back, Bottom } from "@/components/verticalRotatingTile";
+import RotatingTile from "@/components/rotatingCube/rotatingTile";
+import VerticalRotatingTile, { Front, Top, Back, Bottom } from "@/components/verticalRotatingCube/verticalRotatingTile";
 
 export default function Home() {
   return (
     <div className="">
       <RotatingTile></RotatingTile>
-      {/* <VerticalRotatingTile width="500px" height="100px" border="green" borderWidth="2px" colors={["#0b1", "#162", "#0b1", "#162"]}>
+      <VerticalRotatingTile width="500px" height="100px" border="green" borderWidth="2px" colors={["#0b1", "#162", "#0b1", "#162"]}>
         <Front>
-          <div style={{ color: "white", fontWeight: 600 }}>Front 500×100 — click to rotate</div>
+          <div style={{ color: "white", fontWeight: 600 }}>Front</div>
         </Front>
         <Top>
-          <div style={{ color: "white" }}>Top face content</div>
+          <div style={{ color: "white" }}>Top </div>
         </Top>
         <Back>
-          <div style={{ color: "white" }}>Back face content</div>
+          <div style={{ color: "white" }}>Back </div>
         </Back>
         <Bottom>
-          <div style={{ color: "white" }}>Bottom face content</div>
+          <div style={{ color: "white" }}>Bottom</div>
         </Bottom>
-      </VerticalRotatingTile> */}
+      </VerticalRotatingTile>
     </div>
   );
 }

@@ -133,7 +133,7 @@ const VerticalRotatingTile: Compound = ({
 
   return (
     <div
-      className={`container ${className}`.trim()}
+      className={`vertical-rotating-cube container ${className}`.trim()}
       onClick={() => animateTile()}
       onKeyDown={handleKey}
       role="button"
