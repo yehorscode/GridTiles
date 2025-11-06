@@ -8,6 +8,7 @@ type Props = {
   colors?: string[];
   border?: string;
   borderWidth?: string;
+  reverse?: boolean;
 };
 export default function RotatingTile({
   text = [],
@@ -17,11 +18,13 @@ export default function RotatingTile({
   colors = [],
   border = "",
   borderWidth = "1px",
+  reverse = false,
 }: Props) {
   const [side, setSide] = useState<number>(0);
 
-  function animateTile(direction: 1 | -1 = 1) {
-    setSide((prev) => (prev + direction + 4) % 4);
+  function animateTile(direction?: 1 | -1) {
+    const step = direction ?? (reverse ? -1 : 1);
+    setSide((prev) => (prev + step + 4) % 4);
   }
 
   const rotationY = side * -90;
@@ -42,7 +45,12 @@ export default function RotatingTile({
   } as React.CSSProperties & Record<string, string | undefined>;
 
   return (
-    <div className="container" onClick={() => animateTile()} role="button" aria-label="Rotate cube">
+    <div
+      className="container"
+      onClick={() => animateTile()}
+      role="button"
+      aria-label="Rotate cube"
+    >
       <div className="scene">
         <div className="cube" style={cubeStyle}>
           <div className="face front">
