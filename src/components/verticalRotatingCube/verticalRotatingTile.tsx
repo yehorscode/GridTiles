@@ -1,4 +1,12 @@
-import React, { isValidElement, useCallback, useMemo, useState } from "react";
+import React, {
+  isValidElement,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 /**
  * VerticalRotatingTile
  *
@@ -32,9 +40,11 @@ type FaceProps = {
   className?: string;
 };
 
-
 const makeFace = (name: FaceName) => {
-  const Face: React.FC<FaceProps> & { slotName: FaceName } = ({ children }) => <>{children}</>;
+  const Face: React.FC<FaceProps> & { slotName: FaceName } = ({
+    children,
+    className: _className = "",
+  }) => <>{children}</>;
   Face.displayName = name.charAt(0).toUpperCase() + name.slice(1);
   Face.slotName = name;
   return Face;
@@ -48,12 +58,12 @@ const Bottom = makeFace("bottom");
 type Props = {
   className?: string;
   reverse?: boolean;
-  width?: string; 
-  height?: string; 
-  depth?: string; 
-  border?: string; 
-  borderWidth?: string; 
-  colors?: string[]; 
+  width?: string;
+  height?: string;
+  depth?: string;
+  border?: string;
+  borderWidth?: string;
+  colors?: string[];
   children?: ReactNode;
 };
 
@@ -75,84 +85,142 @@ const VerticalRotatingTile: Compound = ({
   colors = [],
   children,
 }) => {
-  const [side, setSide] = useState<number>(0); 
+  const [side, setSide] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const animateTile = useCallback((direction?: 1 | -1) => {
-    const step = direction ?? (reverse ? -1 : 1);
-    setSide((prev) => (prev + step + 4) % 4);
-  }, [reverse]);
+  const animateTile = useCallback(
+    (direction?: 1 | -1) => {
+      const step = direction ?? (reverse ? -1 : 1);
+      setSide((prev) => (prev + step + 4) % 4);
+    },
+    [reverse]
+  );
 
-  const rotationX = side * -90; 
+  const rotationX = side * -90;
 
   const faceContent = useMemo(() => {
-    const map: Record<FaceName, ReactNode> = {
-      front: null,
-      top: null,
-      back: null,
-      bottom: null,
+    const map: Record<FaceName, { content: ReactNode; className?: string }> = {
+      front: { content: null, className: "" },
+      top: { content: null, className: "" },
+      back: { content: null, className: "" },
+      bottom: { content: null, className: "" },
     };
     React.Children.forEach(children, (child) => {
       if (!isValidElement(child)) return;
-      const el = child as ReactElement<{ children?: ReactNode }> & { type: { slotName?: FaceName } };
-      const slot = el.type && (el.type as any).slotName;
-      if (slot && (map as any)[slot] === null) {
-        (map as any)[slot] = el.props.children;
+      const el = child as ReactElement<{
+        children?: ReactNode;
+        className?: string;
+      }> & { type: { slotName?: FaceName } };
+      const slot = (el.type as any)?.slotName as FaceName | undefined;
+      if (slot) {
+        const key = slot as FaceName;
+        if (map[key].content === null) {
+          map[key] = {
+            content: el.props.children,
+            className: el.props.className,
+          };
+        }
       }
     });
     return map;
   }, [children]);
 
-  const cubeStyle = useMemo(() => ({
-    transform: `rotateX(${rotationX}deg)`,
-    ["--cube-width"]: width,
-    ["--cube-height"]: height,
-    ["--cube-depth"]: depth ?? height,
-    ["--cube-border"]: border,
-    ["--border-width"]: borderWidth,
-  }) as React.CSSProperties & Record<string, string>, [rotationX, width, height, depth, border, borderWidth]);
+  const cubeStyle = useMemo(
+    () =>
+      ({
+        transform: `rotateX(${rotationX}deg)`,
+        ["--cube-width"]: width,
+        ["--cube-height"]: height,
+        ["--cube-depth"]: depth ?? height,
+        ["--cube-border"]: border,
+        ["--border-width"]: borderWidth,
+      } as React.CSSProperties & Record<string, string>),
+    [rotationX, width, height, depth, border, borderWidth]
+  );
 
+  const hasTailwindBg = (cls?: string) => /\bbg-/.test(cls ?? "");
   const faceStyles: Array<React.CSSProperties> = [
-    { background: colors[0] }, 
-    { background: colors[1] }, 
-    { background: colors[2] }, 
-    { background: colors[3] }, 
+    hasTailwindBg(faceContent.front.className) ? {} : { background: colors[0] },
+    hasTailwindBg(faceContent.top.className) ? {} : { background: colors[1] },
+    hasTailwindBg(faceContent.back.className) ? {} : { background: colors[2] },
+    hasTailwindBg(faceContent.bottom.className)
+      ? {}
+      : { background: colors[3] },
   ];
 
-  const handleKey = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      animateTile();
-    }
-    if (e.key === "ArrowUp") {
-      animateTile(1);
-    }
-    if (e.key === "ArrowDown") {
-      animateTile(-1);
-    }
-  }, [animateTile]);
+  const handleKey = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        animateTile();
+      }
+      if (e.key === "ArrowUp") {
+        animateTile(1);
+      }
+      if (e.key === "ArrowDown") {
+        animateTile(-1);
+      }
+    },
+    [animateTile]
+  );
+
+  const isInteractiveTarget = (target: EventTarget | null) => {
+    if (!target || !(target instanceof HTMLElement)) return false;
+
+    if (target === containerRef.current) return false;
+
+    const interactive = target.closest(
+      'a, button, input, select, textarea, [contenteditable], [data-prevent-rotate], [role="button"], [role="link"]'
+    );
+
+    return Boolean(interactive && interactive !== containerRef.current);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isInteractiveTarget(e.target)) return;
+    animateTile();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (isInteractiveTarget(e.target)) return;
+    handleKey(e);
+  };
 
   return (
     <div
-      className={`vertical-rotating-cube container ${className}`.trim()}
-      onClick={() => animateTile()}
-      onKeyDown={handleKey}
+      ref={containerRef}
+      className={twMerge(clsx("vertical-rotating-cube container", className))}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
       aria-label="Rotate Cube"
       aria-live="polite"
     >
       <div className="scene" style={cubeStyle}>
-        <div className="face front" style={faceStyles[0]}>
-          {faceContent.front}
+        <div
+          className={twMerge(clsx("face front", faceContent.front.className))}
+          style={faceStyles[0]}
+        >
+          {faceContent.front.content}
         </div>
-        <div className="face top" style={faceStyles[1]}>
-          {faceContent.top}
+        <div
+          className={twMerge(clsx("face top", faceContent.top.className))}
+          style={faceStyles[1]}
+        >
+          {faceContent.top.content}
         </div>
-        <div className="face back" style={faceStyles[2]}>
-          {faceContent.back}
+        <div
+          className={twMerge(clsx("face back", faceContent.back.className))}
+          style={faceStyles[2]}
+        >
+          {faceContent.back.content}
         </div>
-        <div className="face bottom" style={faceStyles[3]}>
-          {faceContent.bottom}
+        <div
+          className={twMerge(clsx("face bottom", faceContent.bottom.className))}
+          style={faceStyles[3]}
+        >
+          {faceContent.bottom.content}
         </div>
       </div>
     </div>
