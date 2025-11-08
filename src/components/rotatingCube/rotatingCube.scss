@@ -1,15 +1,16 @@
 .rotating-cube {
   .scene {
-    width: 200px;
-    height: 200px;
+    width: var(--cube-width, 200px);
+    height: var(--cube-height, 200px);
     display: flex;
   }
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: var(--cube-height, 200px);
     margin: 0;
+    cursor: pointer;
   }
   .cube {
     width: 100%;
@@ -21,45 +22,47 @@
 
   .face {
     position: absolute;
-    width: 200px;
-    height: 200px;
-    border: var(--border-width, 1) solid
+    width: var(--cube-width, 200px);
+    height: var(--cube-height, 200px);
+    border: var(--border-width, 1px) solid
       var(--cube-border, rgba(255, 255, 255, 0.445));
     background-size: cover;
     background-position: center;
     padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .face span {
-    transform: scaleX(-1);
-  }
-  .front {
-    transform: rotateY(0deg) translateZ(100px);
+  .face.front {
+    transform: rotateY(0deg)
+      translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
     background-color: var(--cube-front, red);
   }
-
-  .back {
-    transform: rotateY(180deg) translateZ(100px);
+  .face.back {
+    transform: rotateY(180deg)
+      translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
     background-color: var(--cube-back, magenta);
   }
-
-  .right {
-    transform: rotateY(90deg) translateZ(100px);
+  .face.right {
+    transform: rotateY(90deg)
+      translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
     background-color: var(--cube-right, green);
   }
-
-  .left {
-    transform: rotateY(-90deg) translateZ(100px);
+  .face.left {
+    transform: rotateY(-90deg)
+      translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
     background-color: var(--cube-left, purple);
   }
-
-  .top {
-    transform: rotateX(90deg) translateZ(100px);
+  .face.top {
+    transform: rotateX(90deg)
+      translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
     background-color: var(--cube-top, transparent);
   }
-
-  .bottom {
-    transform: rotateX(-90deg) translateZ(100px);
+  .face.bottom {
+    transform: rotateX(-90deg)
+      translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
     background-color: var(--cube-bottom, transparent);
   }
 }

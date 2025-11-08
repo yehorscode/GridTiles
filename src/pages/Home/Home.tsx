@@ -1,11 +1,31 @@
 import RotatingTile from "@/components/rotatingCube/rotatingTile";
-import VerticalRotatingTile, { Front, Top, Back, Bottom } from "@/components/verticalRotatingCube/verticalRotatingTile";
+import FeedTile from "@/components/feed_tile";
+import VerticalRotatingTile, {
+  Front,
+  Top,
+  Back,
+  Bottom,
+} from "@/components/verticalRotatingCube/verticalRotatingTile";
 
 export default function Home() {
   return (
     <div className="">
-      <RotatingTile></RotatingTile>
-      <VerticalRotatingTile width="500px" height="100px" border="green" borderWidth="2px" colors={["#0b1", "#162", "#0b1", "#162"]}>
+      <FeedTile />
+      <RotatingTile border="white">
+        <RotatingTile.Front>
+          <span>Hello</span>
+        </RotatingTile.Front>
+        <RotatingTile.Right></RotatingTile.Right>
+        <RotatingTile.Back></RotatingTile.Back>
+        <RotatingTile.Left></RotatingTile.Left>
+      </RotatingTile>
+      <VerticalRotatingTile
+        width="500px"
+        height="100px"
+        border="green"
+        borderWidth="2px"
+        colors={["#0b1", "#162", "#0b1", "#162"]}
+      >
         <Front>
           <div style={{ color: "white", fontWeight: 600 }}>Front</div>
         </Front>

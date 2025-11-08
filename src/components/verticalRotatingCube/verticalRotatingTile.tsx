@@ -93,7 +93,7 @@ const VerticalRotatingTile: Compound = ({
       const step = direction ?? (reverse ? -1 : 1);
       setSide((prev) => (prev + step + 4) % 4);
     },
-    [reverse]
+    [reverse],
   );
 
   const rotationX = side * -90;
@@ -134,8 +134,8 @@ const VerticalRotatingTile: Compound = ({
         ["--cube-depth"]: depth ?? height,
         ["--cube-border"]: border,
         ["--border-width"]: borderWidth,
-      } as React.CSSProperties & Record<string, string>),
-    [rotationX, width, height, depth, border, borderWidth]
+      }) as React.CSSProperties & Record<string, string>,
+    [rotationX, width, height, depth, border, borderWidth],
   );
 
   const hasTailwindBg = (cls?: string) => /\bbg-/.test(cls ?? "");
@@ -161,7 +161,7 @@ const VerticalRotatingTile: Compound = ({
         animateTile(-1);
       }
     },
-    [animateTile]
+    [animateTile],
   );
 
   const isInteractiveTarget = (target: EventTarget | null) => {
@@ -170,7 +170,7 @@ const VerticalRotatingTile: Compound = ({
     if (target === containerRef.current) return false;
 
     const interactive = target.closest(
-      'a, button, input, select, textarea, [contenteditable], [data-prevent-rotate], [role="button"], [role="link"]'
+      'a, button, input, select, textarea, [contenteditable], [data-prevent-rotate], [role="button"], [role="link"]',
     );
 
     return Boolean(interactive && interactive !== containerRef.current);
