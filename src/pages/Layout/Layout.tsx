@@ -41,7 +41,7 @@ export default function Layout() {
               <div className="!justify-start text-left flex-none">
                 <span className="font-mono font-bold">GridTiles</span>
               </div>
-              <span className="opacity-30 mx-auto animate-caret-blink text-center">
+              <span className="opacity-0 mx-auto  text-center">
                 Click me!!
               </span>
               <div className="!justify-end text-right flex-none gap-2 flex">

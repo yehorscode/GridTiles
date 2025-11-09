@@ -1,6 +1,5 @@
 import RotatingTile from "@/components/rotatingCube/rotatingTile";
 import useFetchData from "./useFetchData";
-import { getFeedList } from "./useFetchData";
 export default function FeedTile() {
   void console.log(useFetchData("world"));
   return (
