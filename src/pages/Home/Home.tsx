@@ -8,6 +8,7 @@ export default function Home() {
       <div className="text-center">
 
       <h1 className="text-xl font-serif">If you want to see more, check out the <a href="https://github.com/yehorscode/gridtiles" className="underline">Github</a>!</h1>
+      <h1 className="text-xl font-serif">Btw click the navbar! It rotates!</h1>
       </div>
     </div>
   );
