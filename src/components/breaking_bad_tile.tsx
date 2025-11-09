@@ -31,7 +31,7 @@ export default function BreakingBadTile() {
   }, []);
   return (
     <div className="justify-center items-center flex flex-col gap-5">
-      <div className="w-full justify-center items-center flex flex-col gap-1 mt-4">
+      <div className="w-full justify-center items-center flex flex-col gap-1">
         <h1 className="text-2xl font-serif">Or you can do quotes!</h1>
         <span className="mb-2 opacity-40">Click the tile!</span>
         <div className="grid grid-cols-3 gap-2">
