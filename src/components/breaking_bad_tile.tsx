@@ -33,7 +33,7 @@ export default function BreakingBadTile() {
     <div className="justify-center items-center flex flex-col gap-5">
       <div className="w-full justify-center items-center flex flex-col gap-1">
         <h1 className="text-2xl font-serif">Or you can do quotes!</h1>
-        <span className="mb-2 opacity-40">Click the tile!</span>
+        <span className="mb-2 opacity-40">Click the tile! (note: some quotes may be too long, expect overflows)</span>
         <div className="grid grid-cols-3 gap-2">
           <RotatingTile>
             <RotatingTile.Front className="bg-accent! font-bold">
