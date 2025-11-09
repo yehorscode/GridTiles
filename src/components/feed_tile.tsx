@@ -1,11 +1,15 @@
 import RotatingTile from "@/components/rotatingCube/rotatingTile";
 import useFetchData from "./useFetchData";
+import { toast } from "sonner";
 
 export default function FeedTile() {
   const { feed, error } = useFetchData("europe");
   void console.log(feed);
+  if (error) {
+    return toast.error(error);
+  }
   return (
-    
+
     <div className="">
       <RotatingTile border="transparent">
         <RotatingTile.Front className="text-left !justify-end flex !items-end !bg-accent !border !border-white/30">
