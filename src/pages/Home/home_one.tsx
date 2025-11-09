@@ -6,7 +6,7 @@ export default function Home1() {
         <h1 className="text-2xl font-serif">
           Example of using tiles as a crypto tracker
         </h1>
-        <span className="mb-2 opacity-40">Click the tile!</span>
+        <span className="mb-2 opacity-40">Click the tile! Data provided by <a href="https://www.coingecko.com" className="underline">CoinGecko</a></span>
         <CryptoTile />
       </div>
     </div>
