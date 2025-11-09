@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import VerticalRotatingTile, {
   Front,
   Top,
@@ -41,14 +41,14 @@ export default function Layout() {
               <div className="!justify-start text-left flex-none">
                 <span className="font-mono font-bold">GridTiles</span>
               </div>
-              <span className="opacity-0 mx-auto  text-center">
+              <span className="opacity-0 mx-auto  text-center" >
                 Click me!!
               </span>
               <div className="!justify-end text-right flex-none gap-2 flex">
-                <button className="bg-accent-foreground text-accent">
+                <button className="bg-accent-foreground text-accent" onClick={() => window.location.href = "/"}>
                   Homepage
                 </button>
-                <button className="bg-accent-foreground text-accent">
+                <button className="bg-accent-foreground text-accent" onClick={() => window.location.href = "/infinit"}>
                   Infinite Boxes Page
                 </button>
               </div>

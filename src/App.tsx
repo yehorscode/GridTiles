@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import Layout from "./pages/Layout/Layout";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import InfiniteBoxes from "./pages/InfiniteBoxes/InfiniteBoxes";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="*" element={<div>404</div>} />
-            <Route path="/about" element={<div>About Page</div>} />
+            <Route path="infinit" element={<InfiniteBoxes />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -38,22 +38,22 @@
   .face.front {
     transform: rotateY(0deg)
       translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
-    background-color: var(--cube-front, red);
+    background-color: var(--cube-front, rgb(182, 40, 40));
   }
   .face.back {
     transform: rotateY(180deg)
       translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
-    background-color: var(--cube-back, magenta);
+    background-color: var(--cube-back, rgb(151, 33, 206));
   }
   .face.right {
     transform: rotateY(90deg)
       translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
-    background-color: var(--cube-right, green);
+    background-color: var(--cube-right, rgb(33, 121, 33));
   }
   .face.left {
     transform: rotateY(-90deg)
       translateZ(calc(var(--cube-depth, var(--cube-width, 200px)) / 2));
-    background-color: var(--cube-left, purple);
+    background-color: var(--cube-left, rgb(202, 110, 23));
   }
   .face.top {
     transform: rotateX(90deg)
