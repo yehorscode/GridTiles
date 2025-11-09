@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/rss.ts", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "dist/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/rss", "dest": "/api/rss.ts" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
