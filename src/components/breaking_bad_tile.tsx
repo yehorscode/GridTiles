@@ -13,7 +13,7 @@ export default function BreakingBadTile() {
   const [chuckJokes, setChuckJokes] = useState<string[]>([]);
 
   function getChuckNorris() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 6; i++) {
       axios.get("https://api.chucknorris.io/jokes/random").then((response) => {
         setChuckJokes((prevJokes) => [...prevJokes, response.data.value]);
       });
