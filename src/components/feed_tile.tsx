@@ -5,6 +5,7 @@ export default function FeedTile() {
   const { feed, error } = useFetchData("europe");
   void console.log(feed);
   return (
+    
     <div className="">
       <RotatingTile border="transparent">
         <RotatingTile.Front className="text-left !justify-end flex !items-end !bg-accent !border !border-white/30">
